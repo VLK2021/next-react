@@ -1,13 +1,16 @@
-import styles from '../styles/Home.module.css'
+import {getFeaturedEvents} from "../dummy-data";
+
+import EventList from "../components/events/event-list";
 
 
-function Home() {
+const Home = () => {
+    const featuredEvents = getFeaturedEvents();
+
+
     return (
-        <>
-            <main className={`${styles.main}`}>
-                NEXT
-            </main>
-        </>
+        <main>
+            <EventList items={featuredEvents}/>
+        </main>
     )
 }
 
