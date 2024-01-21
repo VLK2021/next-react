@@ -19,6 +19,7 @@ const DUMMY_EVENTS = [
         image: 'images/introvertEvent.jpg',
         isFeatured: true,
     },
+
     {
         id: 'e3',
         title: 'Networking for extroverts',
