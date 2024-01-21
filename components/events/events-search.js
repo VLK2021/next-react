@@ -1,6 +1,7 @@
 import {useRef} from "react";
 
 import classes from './events-search.module.css';
+import Button from "../ui/button";
 
 
 const EventsSearch = (props) => {
@@ -47,7 +48,7 @@ const EventsSearch = (props) => {
                 </div>
             </div>
 
-            <button>Find Events</button>
+            <Button>Find Events</Button>
         </form>
     );
 };
