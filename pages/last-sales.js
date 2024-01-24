@@ -5,7 +5,7 @@ import useSWR from "swr";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 
-function LastSalesPage() {
+const LastSalesPage = () => {
     const apiUrl = 'https://react-meetup-e5ce3-default-rtdb.firebaseio.com/sales.json';
 
     const [sales, setSales] = useState([]);
