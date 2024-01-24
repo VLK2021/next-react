@@ -73,6 +73,7 @@ const LastSalesPage = (props) => {
 }
 
 
+
 export async function getStaticProps() {
     const response = await fetch('https://react-meetup-e5ce3-default-rtdb.firebaseio.com/sales.json');
     const data = await response.json();
