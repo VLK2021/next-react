@@ -1,16 +1,12 @@
-import {useRouter} from "next/router";
-
-import {getEventById} from "../../dummy-data";
 import EventSummary from "../../components/event-detail/event-summary";
 import EventLogistics from "../../components/event-detail/event-logistics";
 import EventContent from "../../components/event-detail/event-content";
 import ErrorAlert from "../../components/ui/error-alert";
+import {getAllEvents} from "../../helpers/api-util";
 
 
-const EventDetailPage = () => {
-    const router = useRouter();
-    const eventId = router.query.eventId;
-    const event = getEventById(eventId);
+const EventDetailPage = (props) => {
+    const event = props.selectedEvent;
 
     if (!event) {
         return (
@@ -22,19 +18,40 @@ const EventDetailPage = () => {
 
 
     return (
-            <>
-                <EventSummary title={event.title} />
-                <EventLogistics
-                    date={event.date}
-                    address={event.location}
-                    image={event.image}
-                    imageAlt={event.title}
-                />
-                <EventContent>
-                    <p>{event.description}</p>
-                </EventContent>
-            </>
+        <>
+            <EventSummary title={event.title}/>
+            <EventLogistics
+                date={event.date}
+                address={event.location}
+                image={event.image}
+                imageAlt={event.title}
+            />
+            <EventContent>
+                <p>{event.description}</p>
+            </EventContent>
+        </>
     );
 };
+
+
+export async function getStaticProps(context) {
+    const eventId = context.params.eventId;
+    const events = await getAllEvents();
+
+    const event = events.find((event) => event.id === eventId);
+
+    return {props: {selectedEvent: event}}
+}
+
+
+export async function getStaticPaths() {
+    const events = await getAllEvents();
+    const paths = events.map(event => ({params: {eventId: event.id}}));
+
+    return {
+        paths: paths,
+        fallback: false
+    }
+}
 
 export default EventDetailPage;
