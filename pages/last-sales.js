@@ -5,10 +5,10 @@ import useSWR from "swr";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 
-const LastSalesPage = () => {
+const LastSalesPage = (props) => {
     const apiUrl = 'https://react-meetup-e5ce3-default-rtdb.firebaseio.com/sales.json';
 
-    const [sales, setSales] = useState([]);
+    const [sales, setSales] = useState(props.sales);
     const {data, error} = useSWR(apiUrl, fetcher);
     // const [isLoading, setIsLoading] = useState(false);
 
@@ -58,7 +58,7 @@ const LastSalesPage = () => {
         return <p>Failed to load</p>
     }
 
-    if (!data || !sales) {
+    if (!data && !sales) {
         return <p>Loading...</p>
     }
 
@@ -70,6 +70,25 @@ const LastSalesPage = () => {
             }
         </ul>
     );
+}
+
+
+export async function getStaticProps() {
+    const response = await fetch('https://react-meetup-e5ce3-default-rtdb.firebaseio.com/sales.json');
+    const data = await response.json();
+
+    const transformSales = [];
+
+    for (const key in data) {
+        transformSales.push(
+            {
+                id: key,
+                username: data[key].username,
+                volume: data[key].volume
+            }
+        );
+    }
+    return {props: {sales: transformSales}};
 }
 
 export default LastSalesPage;
