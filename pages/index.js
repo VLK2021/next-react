@@ -1,12 +1,16 @@
 import EventList from "../components/events/event-list";
-import {getAllEvents} from "../helpers/api-util";
+import {getFeaturedEvents} from "../helpers/api-util";
 
 
 export async function getStaticProps() {
-    const events = await getAllEvents();
-    const filterTransformSales = events.filter((event) => event.isFeatured);
+    const filterTransformSales = await getFeaturedEvents();
 
-    return {props: {featuredEvents: filterTransformSales}}
+    return {
+        props: {
+            featuredEvents: filterTransformSales
+        },
+        revalidate: 1800
+    }
 }
 
 

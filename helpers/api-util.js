@@ -11,8 +11,8 @@ export async function getAllEvents() {
                 description: data[key].description,
                 image: data[key].image,
                 isFeatured: data[key].isFeatured,
-                location: data[key].location
-
+                location: data[key].location,
+                title: data[key].title
             }
         );
     }
@@ -28,5 +28,5 @@ export async function getFeaturedEvents() {
 
 export async function getEventById(id) {
     const allEvents = await getAllEvents();
-    // return DUMMY_EVENTS.find((event) => event.id === id);
+    return allEvents.find((event) => event.id === id);
 }
