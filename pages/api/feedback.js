@@ -12,7 +12,6 @@ export function extractFeedback(filePath) {
     return JSON.parse(fileData);
 }
 
-
 export default function handler(req, res) {
     if (req.method === 'POST') {
         const email = req.body.email;
